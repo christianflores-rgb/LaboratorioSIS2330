@@ -1,0 +1,96 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Unit1.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+int xIni=-1;
+int xFin=-1;
+int yIni=-1;
+int yFin=-1;
+TForm1 *Form1;
+
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+        : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+/*Form1->Canvas->Moveto[];
+Form1->Canvas->Moveto[];
+Form1->Canvas->Moveto[];*/
+Form1->Canvas->Pixels[50][50]=clGreen;
+
+}
+//---------------------------------------------------------------------------
+void dda(int xIni,int xFin,int yIni,int yFin){
+    float pendiente = (yFin-yIni)/(xFin-xIni)   ;
+    int dx = abs(xFin-xIni);
+    int dy =  abs(yFin-yIni);
+    int pasos = (dx>dy) ? dx:dy;
+    float x = xIni;
+    float y = yIni;
+    float incX = dx/pasos;
+    float incY = dy/pasos;
+    for(int i=0;i<pasos;i++)
+    {
+     if(pendiente<=1){
+       x=x+1.0 ;
+       y=y+(1.0/pendiente);
+     }
+     else{
+      y=y+1.0;
+      x=x+(1.0/pendiente);
+     }
+     Form1->Canvas->Pixels[(int)x][(int)y] = clBlack;
+         x=x+incX;
+         y=y+incX;
+    }
+
+void __fastcall TForm1::FormClick(TObject *Sender)
+{
+ TPoint punto = Form1->ScreenToClient(Mouse->CursorPos);
+  int x = punto.x;
+  int y = punto.y;
+
+  if(xIni==-1){
+  xIni=x;
+  }
+  else{
+  xFin=x;
+  }
+
+  if(yIni==-1){
+  yIni=y;
+  }
+  else{
+  yFin=y;
+  }
+if(xIni!=-1 && xFin!=-1 && yIni!=-1 && xFin!=-1){
+         dda(xIni,yIni,Xfin,yFin);
+         }
+         Label1-Caption="xIni"+IntToStr(xIni);
+         Label2-Caption="xFin"+IntToStr(xFin);
+         Label3-Caption="yIni"+IntToStr(yIni);
+         Label4-Caption="yFin"+IntToStr(yFin);
+         Form1->Canvas->Pixels[x][y]=clGreen;
+         }
+//---------------------------------------------------------------------------
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+         label1-Cacption="xIni";
+         label2-Cacption="xFin";
+         label3-Cacption="yIni";
+         label4-Cacption="yFin";
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
